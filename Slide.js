@@ -1,6 +1,5 @@
 class Slide {
 	constructor() {
-        this._components = [];
     }
 
     registerComponent(component) {

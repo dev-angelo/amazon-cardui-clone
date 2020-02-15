@@ -5,12 +5,12 @@ const DirectionEnum = Object.freeze({"left": 0, "right": 1})
 class SlideService extends Slide {
     constructor(contentArea) {
         super();
-        this._components = [];
-        this._contentArea = contentArea;
 
+        this._components = [];
         this._currentIndex = 0;
-        this._contentCount = this._contentArea.children.length;
         this._isAnimationRunning = false;
+        this._contentArea = contentArea;
+        this._contentCount = this._contentArea.children.length;
 
         this._appendAdditionalElementsForLoop(this._contentArea);
         this._registerEventListenerOnBottomContentArea(this._contentArea);
@@ -35,7 +35,7 @@ class SlideService extends Slide {
             this._changeCurrentIndex(index);
         }
         else {
-            //Unexpected flow
+            throw new Error("Undefined Interface");
         }
     }
 
@@ -80,7 +80,7 @@ class SlideService extends Slide {
     }
 
     _setCurrentIndex(index) {
-        if (true === this._isAnimationRunning || this._currentIndex === index)
+        if (this._isAnimationRunning || this._currentIndex === index)
             return;
 
         this._components.forEach(element => {
@@ -122,11 +122,6 @@ class SlideService extends Slide {
         this._contentArea.style.marginLeft = -(this._currentIndex * this._contentArea.offsetWidth) + 'px';
 
         this._isAnimationRunning = false;
-    }
-
-    _initElementStatus(index) {
-        const offsetWidth = -(index * this._contentArea.offsetWidth);
-        this._contentArea.style.marginLeft = offsetWidth + 'px';
     }
 }
 

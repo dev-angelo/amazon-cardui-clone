@@ -1,13 +1,13 @@
 class SlideComponent {
-	constructor(slideService) {
-        this._slideService = slideService;
-    }
-
-    sendEvent(message, index) {
-        this._slideService.mediate(message, index);
+	constructor(slideService, elements) {
+        this._elements = elements;
+        this._registerEventListenerOnElements(slideService, elements);
     }
 
     onNotifyIndexChanged(index) {
+    }
+
+    _registerEventListenerOnElements(elements) {
     }
 }
 

@@ -4,25 +4,25 @@ const DirectionEnum = Object.freeze({"left": 0, "right": 1})
 
 class MenuButtonManager extends SlideComponent {
 	constructor(slideService, buttons) {
-        super(slideService);
-        this._menuButtons = buttons;
-        this._registerEventListenerOnMenuButtons(this._menuButtons);
+        super(slideService, buttons);
     }
 
-    _registerEventListenerOnMenuButtons(elements) {
+    //Override
+    _registerEventListenerOnElements(slideService, elements) {
         elements.forEach((element, index) => {
             element.addEventListener('click', event => {
-                this._menuButtonHandler(event, index);
+                this._menuButtonHandler(event, slideService, index);
             });
         });
     }
 
-    _menuButtonHandler(event, index) {
-        this._slideService.mediate('changeCurrentIndex', index);
+    _menuButtonHandler(event, slideService, index) {
+        slideService.mediate('changeCurrentIndex', index);
     }
 
+    //Override
     onNotifyIndexChanged(index) {
-        this._menuButtons.forEach((element, elementIndex) => {
+        this._elements.forEach((element, elementIndex) => {
             element.className = elementIndex === index ? 'selected' : '';
         })
     }

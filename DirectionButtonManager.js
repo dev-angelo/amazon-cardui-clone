@@ -4,28 +4,27 @@ const DirectionEnum = Object.freeze({"left": 0, "right": 1})
 
 class DirectionButtonManager extends SlideComponent {
 	constructor(slideService, buttons) {
-        super(slideService);
-        this._directionButtons = buttons;
-        this._registerEventListenerOnDirectionButtons(this._directionButtons);
+        super(slideService, buttons);
     }
 
-    _registerEventListenerOnDirectionButtons(elements) {
+    //Override
+    _registerEventListenerOnElements(slideService, elements) {
         elements.forEach((element, index) => {
             element.addEventListener('click', event => {
-                this._directionButtonHandler(event, index);
+                this._directionButtonHandler(event, slideService, index);
             });
         });
     }
 
-    _directionButtonHandler(event, direction) {
+    _directionButtonHandler(event, slideService, direction) {
         if (DirectionEnum.left === direction) {
-            this._slideService.mediate('decreaseCurrentIndex');
+            slideService.mediate('decreaseCurrentIndex');
         }
         else if (DirectionEnum.right === direction) {
-            this._slideService.mediate('increaseCurrentIndex');
+            slideService.mediate('increaseCurrentIndex');
         }
         else {
-            //Unexpected Flow.
+            throw new Error("Undefined button.");
         }
     }
 }
